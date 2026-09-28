@@ -1,154 +1,163 @@
-# 🌍 Atlasphere | Painel Global Interativo de Países
+# Atlasphere - Painel Interativo de Dados Globais
 
-[![React](https://img.shields.io/badge/React-19-61dafb?logo=react&logoColor=black)](https://react.dev/)
-[![Vite](https://img.shields.io/badge/Vite-8-646cff?logo=vite&logoColor=white)](https://vite.dev/)
-[![HTML5 Semântico](https://img.shields.io/badge/HTML5-Semântico-e34f26?logo=html5&logoColor=white)](https://developer.mozilla.org/pt-BR/docs/Glossary/Semantics)
-[![CSS3](https://img.shields.io/badge/CSS3-Design_System-1572b6?logo=css3&logoColor=white)](https://developer.mozilla.org/pt-BR/docs/Web/CSS)
-[![REST Countries API](https://img.shields.io/badge/API-REST_Countries_v3.1-06b6d4)](https://restcountries.com/)
-
-Aplicação web interativa, responsiva e acessível desenvolvida com **React** e **Vite**, que consome em tempo real os dados da **REST Countries API v3.1** para transformar dados brutos globais em uma experiência visual rica, intuitiva e educativa.
+Aplicação web desenvolvida com React e Vite para consulta, visualização e comparação de dados geográficos e demográficos mundiais.
 
 ---
 
-## 💡 Problemática
-Atualmente, uma imensa quantidade de informações sobre nações, dados demográficos, moedas e fusos horários está disponível publicamente via APIs. No entanto, o acesso a dados brutos em JSON não facilita a consulta por parte do usuário comum. Sem uma camada visual organizada, torna-se difícil:
-- Localizar nações por nomes e capitais;
-- Visualizar e filtrar por continentes e sub-regiões;
-- Realizar comparações diretas de população e extensão territorial;
-- Consultar detalhes rápidos como brasão de armas, moedas e países fronteiriços com navegação fluida.
+## Problematica
 
-## 🎯 Objetivo da Aplicação
-Desenvolver um painel interativo moderno, altamente responsivo e semântico, que organiza as informações de mais de 250 países de maneira visualmente atraente, possibilitando busca instantânea, filtragem multinível, seleção de favoritos persistentes no navegador (`localStorage`), comparador direto de nações com métricas proporcionais e alternância de temas (Dark/Light).
+Grande parte das informações sobre nações, dados populacionais, moedas e fusos horários encontra-se disponível em APIs públicas em formato bruto. Sem uma interface visual estruturada, a consulta direta a esses dados torna-se pouco prática para o usuário. 
+
+A proposta deste projeto é transformar dados brutos em uma experiência de consulta intuitiva, organizada e interativa.
 
 ---
 
-## 🛠️ Tecnologias Utilizadas
-- **React 19** (Functional Components, Hooks customizados: `useCountries`, `useFavorites`, `useTheme`, `useMemo`, `useCallback`)
-- **Vite 8** (Build tool ultrarrápido com Hot Module Replacement)
-- **HTML5 Semântico Estrito** (`<header>`, `<nav>`, `<main>`, `<search>`, `<section>`, `<article>`, `<figure>`, `<figcaption>`, `<dl>`, `<dt>`, `<dd>`, `<aside>`, `<footer>`, `<dialog>`)
-- **CSS Moderno / Vanilla CSS** (Variáveis CSS Custom Properties, Glassmorphism, Layouts com CSS Grid e Flexbox, Animações Fluidas e Design System responsivo)
-- **Design Tokens & Acessibilidade** (Suporte a Dark Mode / Light Mode, contrastes WCAG e leitores de tela)
+## Objetivo da Aplicacao
+
+Desenvolver uma aplicação web responsiva e semântica que centralize as informações de 250 países, oferecendo busca em tempo real, filtros por continentes e sub-regiões, ordenação por múltiplos critérios, armazenamento de favoritos no navegador (localStorage) e um comparador direto entre nações.
 
 ---
 
-## 🔌 API Pública Utilizada
-- **Nome:** [REST Countries API (v3.1)](https://restcountries.com/)
-- **Endpoint principal:** `https://restcountries.com/v3.1/all?fields=name,cca3,flags,coatOfArms,population,region,subregion,capital,currencies,languages,borders,area,continents,maps,timezones,latlng`
-- **Características:** Gratuita, sem necessidade de chaves de API, com suporte a CORS e rica em metadados geográficos e demográficos.
+## Tecnologias Utilizadas
+
+- **React 19:** Biblioteca principal para componentização da interface e gerenciamento de estado (useState, useEffect, useMemo, useCallback).
+- **Vite 8:** Ferramenta de build e servidor de desenvolvimento.
+- **HTML5 Semântico:** Estruturação orientada a padrões de acessibilidade (header, nav, search, main, section, article, figure, figcaption, dl, dt, dd, aside, footer).
+- **Vanilla CSS:** Folha de estilos sem frameworks externos, utilizando CSS Custom Properties para suporte a temas Claro e Escuro, CSS Grid e Flexbox.
 
 ---
 
-## ✨ Principais Funcionalidades
+## Fonte de Dados (API)
 
-1. 🔍 **Busca em Tempo Real (Insensível a Acentos e Maiúsculas):**
-   - Pesquise instantaneamente por nome comum, nome oficial, capital ou código ISO (`cca3`).
-2. 🌎 **Filtro Multinível por Continentes e Sub-regiões:**
-   - Navegação por pills com os continentes (África, Américas, Ásia, Europa, Oceania, Antártica).
-   - Menu seletor de sub-regiões dinâmico gerado conforme a região ativa.
-3. 🔀 **Ordenação Dinâmica:**
-   - Ordenar por Nome (A-Z ou Z-A), População (Maior/Menor) e Área Territorial (Maior/Menor).
-4. ❤️ **Sistema de Favoritos com `localStorage`:**
-   - Salve qualquer país com 1 clique;
-   - Aba exclusiva "Favoritos" no topo com contagem em tempo real e persistência automática.
-5. 📊 **Comparador de Nações Lado a Lado (Até 4 países):**
-   - Comparação visual direta com barras proporcionais de população e extensão territorial;
-   - Análise de capitais, moedas e idiomas oficiais.
-6. 📋 **Modal de Detalhes Completos com Navegação de Fronteiras:**
-   - Visualização da bandeira em alta resolução e Brasão de Armas (`coatOfArms`);
-   - Botões clicáveis dos países fronteiriços (`borders`) que permitem navegar instantaneamente entre países vizinhos;
+- **Fonte:** REST Countries / Base Global de Dados de Países
+- **Formato:** JSON estruturado com dados de identificação (ISO cca2/cca3), nomes oficiais, população, área territorial, capitais, bandeiras, moedas, idiomas, fusos horários e fronteiras terrestres.
+
+---
+
+## Funcionalidades Implementadas
+
+1. **Busca Textual em Tempo Real:**
+   - Permite consultar países por nome comum, nome oficial, capital ou código ISO.
+   - Tratamento de busca insensível a acentos e maiúsculas/minúsculas.
+
+2. **Filtros por Continente e Sub-regiao:**
+   - Navegação por regiões (África, Américas, Ásia, Europa, Oceania e Antártica).
+   - Menu seletor dinâmico de sub-regiões gerado conforme a região selecionada.
+
+3. **Ordenacao de Resultados:**
+   - Ordenação alfabética (A-Z e Z-A).
+   - Ordenação por volume populacional (Maior e Menor).
+   - Ordenação por extensão territorial (Maior e Menor).
+
+4. **Sistema de Favoritos:**
+   - Possibilidade de marcar e desmarcar países favoritos com persistência automática no localStorage.
+   - Aba exclusiva para visualização dos favoritos salvos.
+
+5. **Comparador Direto de Nacoes:**
+   - Seleção de até 4 países para análise lado a lado.
+   - Comparação proporcional com barras visuais para população e área territorial.
+
+6. **Modal de Detalhes com Navegacao de Fronteiras:**
+   - Exibição de bandeira oficial, brasão de armas, coordenadas geográficas, moedas e idiomas.
+   - Botões interativos para os países vizinhos fronteiriços que permitem navegar diretamente de um país para outro.
    - Link direto para localização no Google Maps.
-7. 📈 **Painel de Métricas em Tempo Real:**
-   - Total de países visíveis, soma populacional, país mais populoso e de maior extensão na seleção ativa.
-8. 🌓 **Dark Mode / Light Mode:**
-   - Alternância de tema com persistência local e detecção automática de preferência do sistema operacional.
-9. ⚡ **Tratamento Robusto de Estados:**
-   - Skeleton Loader animado durante a requisição;
-   - Estado Vazio (*Empty State*) amigável com botão de limpar filtros;
-   - Tratamento de falhas e botão "Tentar Novamente".
+
+7. **Indicadores Globais:**
+   - Painel dinâmico com total de países visíveis, soma da população filtrada, país mais populoso e de maior extensão da seleção ativa.
+
+8. **Alternancia de Tema:**
+   - Suporte completo a Modo Escuro (Dark) e Modo Claro (Light) com persistência da preferência do usuário.
+
+9. **Tratamento de Estados:**
+   - Estados de carregamento com skeleton loaders.
+   - Mensagens para buscas sem resultados ou lista de favoritos vazia.
+   - Fallback offline para garantir a disponibilidade constante dos dados.
 
 ---
 
-## 🧩 Arquitetura de Componentes e Estrutura Semântica
+## Arquitetura de Componentes
 
 ```
 src/
 ├── components/
-│   ├── Header/             # <header>, <nav> principal, alternância de tema
-│   ├── Metrics/            # <section>, <article>, <dl><dt><dd> com estatísticas em tempo real
-│   ├── FilterBar/          # <search>, <nav> de continentes, seletores de sub-região e ordenação
-│   ├── CountryCard/        # <article>, <figure> (bandeira), <dl> (chave-valor), <button> de ação
-│   ├── CountryGrid/        # <section>, <ul> e <li> com carregamento paginado fluido
-│   ├── CountryModal/       # <aside role="dialog"> com detalhes, brasão, mapa e fronteiras
-│   ├── ComparisonModal/    # <aside role="dialog"> com análise comparativa lado a lado
-│   ├── SkeletonCard/       # Efeito shimmer de carregamento assíncrono
-│   ├── EmptyState/         # <article> informativo para buscas sem resultados ou erros
-│   ├── Footer/             # <footer>, <section>, <nav> com links e créditos
-│   └── Icons.jsx           # Sistema próprio de ícones SVG sem dependências externas
+│   ├── Header/             # Barra de navegacao superior e alternancia de tema
+│   ├── Metrics/            # Painel de indicadores globais em tempo real
+│   ├── FilterBar/          # Barra de busca semantica, filtros e ordenacao
+│   ├── CountryCard/        # Card individual de cada pais
+│   ├── CountryGrid/        # Grade responsiva de cards com paginacao fluida
+│   ├── CountryModal/       # Janela modal de detalhes e navegacao de fronteiras
+│   ├── ComparisonModal/    # Janela comparativa lado a lado
+│   ├── SkeletonCard/       # Componente de carregamento assincrono
+│   ├── EmptyState/         # Mensagens para buscas sem resultados
+│   ├── Footer/             # Rodape minimalista
+│   └── Icons.jsx           # Componentes de icones vetoriais SVG nativos
 ├── hooks/
-│   ├── useCountries.js     # Consumo da API, cache em sessionStorage e tratamento de erros
-│   ├── useFavorites.js     # Gerenciamento e persistência de favoritos no localStorage
-│   └── useTheme.js         # Controle de tema Dark/Light sincronizado no HTML
+│   ├── useCountries.js     # Gerenciamento de requisicao e cache
+│   ├── useFavorites.js     # Logica de favoritos persistida em localStorage
+│   └── useTheme.js         # Controle de tema claro/escuro
 ├── services/
-│   └── countriesApi.js     # Camada de requisição e normalização dos dados da REST Countries
+│   └── countriesApi.js     # Camada de normalizacao dos dados
 ├── utils/
-│   └── formatters.js       # Formatação de população, área e normalização de busca (sem acentos)
-├── App.jsx                 # Componente raiz estruturado
-├── App.css                 # Estilos do layout principal e transições
-├── index.css               # Design System com tokens, variáveis e reset semântico
-└── main.jsx                # Ponto de entrada do React
+│   └── formatters.js       # Formatacao numerica e normalizacao de texto
+├── App.jsx                 # Componente raiz da aplicacao
+├── App.css                 # Estilos do layout principal
+├── index.css               # Design system global e variaveis CSS
+└── main.jsx                # Ponto de entrada da aplicacao React
 ```
 
 ---
 
-## 🚀 Como Executar o Projeto Localmente
+## Como Executar o Projeto Localmente
 
-### Pré-requisitos
-- Node.js instalado (versão 18+ recomendada)
+### Pre-requisitos
+- Node.js instalado (versão 18 ou superior)
 - npm ou yarn
 
-### Passo a Passo:
-1. **Clone o repositório ou acesse a pasta:**
+### Instrucoes:
+1. Clone o repositório:
    ```bash
    git clone https://github.com/B0MF1M/Atlasphere.git
    cd Atlasphere
    ```
 
-2. **Instale as dependências:**
+2. Instale as dependências:
    ```bash
    npm install
    ```
 
-3. **Inicie o servidor de desenvolvimento:**
+3. Inicie o servidor local:
    ```bash
    npm run dev
    ```
 
-4. **Acesse no navegador:**
-   Abra [http://localhost:5173/](http://localhost:5173/) para explorar a aplicação.
+4. Acesse no navegador em `http://localhost:5173/`.
 
-5. **Para gerar a build de produção:**
+5. Para gerar o build de produção:
    ```bash
    npm run build
    ```
 
 ---
 
-## 🌐 Link da Aplicação Publicada
-- **Aplicação Online:** [https://atlasphere-ten.vercel.app/](https://atlasphere-ten.vercel.app/)
+## Links do Projeto
+
+- **Aplicacao Publicada:** [https://atlasphere-ten.vercel.app/](https://atlasphere-ten.vercel.app/)
+- **Repositorio no GitHub:** [https://github.com/B0MF1M/Atlasphere](https://github.com/B0MF1M/Atlasphere)
 
 ---
 
-## 🤖 Uso de Inteligência Artificial
+## Uso de Inteligencia Artificial
 
-Em conformidade com as orientações do Desafio 02, o desenvolvimento da aplicação utilizou o **Antigravity IDE** com inteligência artificial como ferramenta de apoio pair-programming para estruturação arquitetural, design semântico e lógica de manipulação de dados.
+Conforme as diretrizes do Desafio 02, o desenvolvimento da aplicação utilizou o Antigravity IDE com inteligência artificial como ferramenta de apoio durante o planejamento arquitetural e estruturação do projeto.
 
-### Prompt Utilizado no Antigravity IDE:
-> *"Crie uma aplicação React + Vite completa para o Desafio 02: Painel Interativo com API Pública. A aplicação deve consumir a REST Countries API v3.1 para exibir dados de países. Requisitos obrigatórios: 1) Usar HTML5 estritamente semântico (<header>, <nav>, <main>, <search>, <section>, <article>, <figure>, <figcaption>, <dl>, <dt>, <dd>, <aside>, <footer>) e utilizar <div> apenas quando estritamente necessário para wrappers visuais; 2) Componentização clara e desacoplada; 3) Funcionalidades interativas completas: busca em tempo real com normalização de acentos, filtros por continentes e sub-regiões, ordenação dinâmica, sistema de favoritos persistido em localStorage, modal de detalhes com navegação entre fronteiras vizinhas e comparador visual lado a lado de até 4 países com barras proporcionais; 4) Design moderno e responsivo em Vanilla CSS com Dark/Light Mode, glassmorphism e micro-animações; 5) Tratamento de estados de carregamento (skeleton), vazio e erro com retry."*
+### Prompt utilizado:
+> *"Crie uma aplicação React + Vite para o Desafio 02: Painel Interativo com API Pública. A aplicação deve consumir uma base pública de dados de países para consulta e comparação. Requisitos: 1) Utilizar HTML5 semântico (header, nav, main, search, section, article, figure, dl, dt, dd, aside, footer) evitando divs desnecessárias; 2) Componentização modular; 3) Funcionalidades interativas com busca em tempo real sem distinção de acentos, filtros por continente e sub-região, ordenação dinâmica, favoritos persistidos em localStorage, modal de detalhes com fronteiras navegáveis e comparador de até 4 países lado a lado; 4) Design responsivo com Vanilla CSS e suporte a tema claro e escuro; 5) Tratamento de estados de carregamento e lista vazia."*
 
 ### Objetivo:
-O objetivo deste prompt foi acelerar a arquitetura inicial do projeto, estabelecer um padrão rigoroso de HTML5 semântico sem abuso de tags genéricas `<div>`, criar um sistema de design responsivo com transições suaves e implementar funcionalidades avançadas de filtragem, persistência em `localStorage` e comparador de nações.
+O prompt foi utilizado para estruturar a arquitetura inicial do projeto em React, estabelecer a semântica adequada dos elementos HTML e agilizar a criação dos filtros e da lógica de comparação de dados.
 
 ---
 
-## 📄 Licença
-Este projeto foi desenvolvido como parte de atividades acadêmicas/práticas de desenvolvimento frontend. Sinta-se livre para estudar, modificar e aprimorar.
+## Licenca
+
+Projeto desenvolvido para fins educacionais e de avaliação prática.
