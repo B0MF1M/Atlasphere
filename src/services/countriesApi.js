@@ -1,20 +1,17 @@
 /**
- * Serviço de integração com a API de Países
- * Com suporte a múltiplos endpoints e fallback local com 250 países
+ * Serviço de integração com a base de dados de Países
+ * Contém dados verificados de população, capitais múltiplas, áreas, moedas, idiomas e bandeiras
  */
 import fallbackData from '../data/countriesFallback.json';
 
-const PRIMARY_API = 'https://raw.githubusercontent.com/mledoze/countries/master/countries.json';
-const BACKUP_API = 'https://restcountries.com/v3.1/all';
-
 function normalizeCountryData(item) {
-  const cca2 = (item.cca2 || '').toLowerCase();
-  const cca3 = item.cca3 || '';
+  const cca2 = (item.cca2 || item.iso2 || '').toLowerCase();
+  const cca3 = item.cca3 || item.iso3 || '';
   
   // Nome em português se disponível
   const ptCommon = item.translations?.por?.common || '';
   const ptOfficial = item.translations?.por?.official || '';
-  const enCommon = item.name?.common || 'Desconhecido';
+  const enCommon = item.name?.common || item.name || 'Desconhecido';
   const enOfficial = item.name?.official || '';
 
   // Nomes nativos
@@ -53,16 +50,27 @@ function normalizeCountryData(item) {
     }
   }
 
-  // Capitais
-  const capital = Array.isArray(item.capital) && item.capital.length > 0 
-    ? item.capital[0] 
-    : (typeof item.capital === 'string' ? item.capital : 'Sem capital declarada');
+  // Capitais (suporte a múltiplas capitais como África do Sul, Bolívia, etc.)
+  let capital = 'Sem capital declarada';
+  let allCapitals = '';
 
-  const allCapitals = Array.isArray(item.capital) ? item.capital.join(', ') : capital;
+  if (Array.isArray(item.capital) && item.capital.length > 0) {
+    capital = item.capital[0];
+    allCapitals = item.capital.join(', ');
+  } else if (typeof item.capital === 'string' && item.capital.trim()) {
+    capital = item.capital;
+    allCapitals = item.capital;
+  }
 
-  // População
-  const population = typeof item.population === 'number' ? item.population : 0;
-  const area = typeof item.area === 'number' ? item.area : 0;
+  // População garantida
+  let population = 0;
+  if (typeof item.population === 'number') {
+    population = item.population;
+  } else if (typeof item.population === 'string') {
+    population = parseInt(item.population, 10) || 0;
+  }
+
+  const area = typeof item.area === 'number' ? item.area : (item.area_sq_km || 0);
 
   return {
     cca3,
@@ -92,36 +100,7 @@ function normalizeCountryData(item) {
 }
 
 export async function fetchAllCountries() {
-  try {
-    // 1. Tentar primeiro o endpoint JSON aberto e rápido
-    const response = await fetch(PRIMARY_API, {
-      headers: { Accept: 'application/json' }
-    });
-
-    if (response.ok) {
-      const data = await response.json();
-      if (Array.isArray(data) && data.length > 0) {
-        return data.map(normalizeCountryData);
-      }
-    }
-  } catch (err) {
-    console.warn('Falha na fonte primária, tentando fonte de backup...', err);
-  }
-
-  try {
-    // 2. Tentar endpoint secundário
-    const backupRes = await fetch(BACKUP_API);
-    if (backupRes.ok) {
-      const data = await backupRes.json();
-      if (Array.isArray(data) && data.length > 0) {
-        return data.map(normalizeCountryData);
-      }
-    }
-  } catch (err) {
-    console.warn('Falha no backup online, utilizando dataset local garantido...', err);
-  }
-
-  // 3. Fallback garantido local de 250 países
+  // Retorna os 250 países com população verificada e normalizada instantaneamente
   if (Array.isArray(fallbackData) && fallbackData.length > 0) {
     return fallbackData.map(normalizeCountryData);
   }

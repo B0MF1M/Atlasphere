@@ -122,7 +122,7 @@ export function CountryModal({
                   <MapPin size={16} className="spec-icon" aria-hidden="true" />
                   <span>Capital</span>
                 </dt>
-                <dd className="spec-value">{country.capital}</dd>
+                <dd className="spec-value">{country.allCapitals || country.capital}</dd>
               </div>
 
               <div className="spec-card">
