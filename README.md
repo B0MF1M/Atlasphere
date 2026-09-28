@@ -134,7 +134,7 @@ src/
 ---
 
 ## 🌐 Link da Aplicação Publicada
-- **Produção:** [https://seu-projeto.vercel.app](https://vercel.com/) *(Atualize com o seu link do Vercel/Netlify)*
+- **Aplicação Online:** [https://atlasphere-ten.vercel.app/](https://atlasphere-ten.vercel.app/)
 
 ---
 
